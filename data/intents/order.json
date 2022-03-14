@@ -1,8 +1,11 @@
-{
-  "order": [
-    "I'd like a large pepperoni pizza with mushrooms, olives and extra cheese, with a regular crust.",
-    "Can I get a cheese pizza only, small, thin crust.",
-    "I need to order a medium suasage with green peppers and onions, with a normal crust.",
-    "Send me a meat lovers pizza, thick crust."
-  ]
-}
+[
+  "I'd like a large pepperoni pizza with mushrooms, olives and extra cheese, with a regular crust.",
+  "Can I get a cheese pizza only, small, thin crust.",
+  "I need to order a medium suasage with green peppers and onions, with a normal crust.",
+  "Send me a meat lovers pizza, thick crust.",
+  "I would like an original crust cheese pizza.",
+  "I'd like to order a pepperoni pizza with mushrooms, on a thin crust.",
+  "Send me a meat lovers pizza, on stuffed crust, with extra sauce and onions.",
+  "I'd need a pizza delivered, can it have sausage, pepperoni, pineapple and have it on a thin crust please.",
+  "Yeah may I please have a large bacon and ham pizza on thin crust with white sauce?"
+]
