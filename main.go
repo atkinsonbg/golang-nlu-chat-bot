@@ -21,18 +21,6 @@ type Intent struct {
 }
 
 func main() {
-	//intents := []Intent{}
-	//intents = append(intents, Intent{
-	//	"Order",
-	//	"data/intents/order.json",
-	//}, Intent{
-	//	"Hours",
-	//	"data/intents/hours.json",
-	//}, Intent{
-	//	"Uknown",
-	//	"data/intents/unknown.json",
-	//})
-
 	classifier := bayesian.NewClassifierTfIdf(Order, Hours, Unknown)
 
 	hoursIntents, err := GetIntents("data/intents/hours.json")
@@ -59,11 +47,11 @@ func main() {
 	classifier.WriteToFile("classifier")
 
 	scores, likely, _ := classifier.LogScores(
-		[]string{"I need a pizza with regular crust pepperoni and extra cheese."},
+		[]string{"Around what time do you open up today?"},
 	)
 
 	fmt.Printf("Scores: %.2f \n", scores)
-	fmt.Printf("Likely Index: %d \n", likely)
+	fmt.Printf("Likely Index: %d, Class: %s \n", likely, classifier.Classes[likely])
 }
 
 func GetIntents(filename string) ([]string, error) {
