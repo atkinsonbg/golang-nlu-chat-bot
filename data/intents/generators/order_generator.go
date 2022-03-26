@@ -1,15 +1,22 @@
-package main
+package generators
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
-func main() {
-	// ORDERS FILE
-	ordersFile, err := os.Open("order_generator.json")
+func GenerateOrderSentences() {
+	// Current directory
+	path, err := os.Getwd()
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Order generator template file
+	ordersFile, err := os.Open(fmt.Sprintf("%s/data/intents/generators/order_generator.json", path))
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -22,8 +29,8 @@ func main() {
 		fmt.Println(err)
 	}
 
-	// CRUSTS FILE
-	crustsFile, err := os.Open("../../entities/crusts.json")
+	// Crusts file
+	crustsFile, err := os.Open(fmt.Sprintf("%s/data/entities/crusts.json", path))
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -36,5 +43,20 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// Sizes file
+	sizesFile, err := os.Open(fmt.Sprintf("%s/data/entities/sizes.json", path))
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer sizesFile.Close()
+
+	sizesBytes, _ := ioutil.ReadAll(sizesFile)
+	var sizes []string
+	err = json.Unmarshal(sizesBytes, &sizes)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	fmt.Println(crusts)
+	fmt.Println(sizes)
 }

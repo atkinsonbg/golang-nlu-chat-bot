@@ -1,81 +1,23 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"github.com/navossoc/bayesian"
-	"io/ioutil"
-	"log"
-	"os"
+	"flag"
+	"main/data/intents/generators"
+	"main/nlu"
 )
-
-const (
-	Order bayesian.Class = "Order"
-	Hours bayesian.Class = "Hours"
-	Unknown bayesian.Class = "Unknown"
-)
-
-type Intent struct {
-	Name	bayesian.Class
-	Filename	string
-}
 
 func main() {
-	classifier := bayesian.NewClassifierTfIdf(Order, Hours, Unknown)
+	trainFlag := flag.Bool("train", false, "Train a new model.")
+	genFlag := flag.Bool("generate", false, "Generate data for training.")
+	flag.Parse()
 
-	hoursIntents, err := GetIntents("data/intents/hours.json")
-	if err != nil {
-		log.Println(err)
+	// Train a new model
+	if *trainFlag {
+		nlu.Train()
 	}
 
-	orderIntents, err := GetIntents("data/intents/order.json")
-	if err != nil {
-		log.Println(err)
+	// Generate sentences
+	if *genFlag {
+		generators.GenerateOrderSentences()
 	}
-
-	unknownIntents, err := GetIntents("data/intents/unknown.json")
-	if err != nil {
-		log.Println(err)
-	}
-
-	classifier.Learn(orderIntents, Order)
-	classifier.Learn(hoursIntents,  Hours)
-	classifier.Learn(unknownIntents,  Unknown)
-
-	classifier.ConvertTermsFreqToTfIdf()
-
-	classifier.WriteToFile("classifier")
-
-	scores, likely, _ := classifier.LogScores(
-		[]string{"Around what time do you open up today?"},
-	)
-
-	fmt.Printf("Scores: %.2f \n", scores)
-	fmt.Printf("Likely Index: %d, Class: %s \n", likely, classifier.Classes[likely])
-}
-
-func GetIntents(filename string) ([]string, error) {
-	jsonFile, err := os.Open(filename)
-	if err != nil {
-		return nil, err
-	}
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	var intents []string
-	err = json.Unmarshal(byteValue, &intents)
-	if err != nil {
-		return nil, err
-	}
-
-	return intents, nil
-}
-
-func LoadClassifier() (*bayesian.Classifier, error) {
-	classifier, err := bayesian.NewClassifierFromFile("classifier")
-	if err != nil {
-		return nil, err
-	}
-
-	return classifier, nil
 }

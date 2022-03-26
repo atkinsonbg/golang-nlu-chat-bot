@@ -16,3 +16,6 @@ Named Entity Recognition will be performed using the following library: https://
 
 ## REST Framework
 The bot will be wrapped in a REST framework, specifically the Echo framework: https://echo.labstack.com/
+
+## CLI Flags
+https://www.rapid7.com/blog/post/2016/08/04/build-a-simple-cli-tool-with-golang/
