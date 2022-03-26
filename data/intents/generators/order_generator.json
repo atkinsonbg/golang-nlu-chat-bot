@@ -1,0 +1,23 @@
+[
+    "I'd like to order a {size} pizza on a {crust} crust with the following toppings {toppings}.",
+    "I'd like to order a {crust} crust pizza with the following toppings {toppings}, size {size}.",
+    "I'd like to order a {size} pizza with the following toppings {toppings} on a {crust} crust.",
+    "I'd like to get a {size} pizza on a {crust} crust with the following toppings {toppings}.",
+    "I'd like to get a {crust} crust pizza with the following toppings {toppings}, size {size}.",
+    "I'd like to get a {size} pizza with the following toppings {toppings} on a {crust} crust.",
+    "Can I get a {size} pizza on a {crust} crust with the following toppings {toppings}.",
+    "Can I get a {crust} crust pizza with the following toppings {toppings}, size {size}.",
+    "Can I get a {size} pizza with the following toppings {toppings} on a {crust} crust.",
+    "I need to order {size} pizza on a {crust} crust with the following toppings {toppings}.",
+    "I need to order a {crust} crust pizza with the following toppings {toppings}, size {size}.",
+    "I need to order a {size} pizza with the following toppings {toppings} on a {crust} crust.",
+    "Send me a {size} pizza on a {crust} crust with the following toppings {toppings}.",
+    "Send me a {crust} crust pizza with the following toppings {toppings}, size {size}.",
+    "Send me a {size} pizza with the following toppings {toppings} on a {crust} crust.",
+    "I would like a {size} pizza on a {crust} crust with the following toppings {toppings}.",
+    "I would like a {crust} crust pizza with the following toppings {toppings}, size {size}.",
+    "I would like a {size} pizza with the following toppings {toppings} on a {crust} crust.",
+    "I need a pizza delivered, a {size} on a {crust} crust with the following toppings {toppings}.",
+    "I need a pizza delivered, {crust} crust with the following toppings {toppings}, size {size}.",
+    "I need a pizza delivered, a {size} with the following toppings {toppings} on a {crust} crust."
+]

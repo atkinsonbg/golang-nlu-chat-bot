@@ -1,8 +1,6 @@
-{
-  "sizes": [
-    "small",
-    "medium",
-    "large",
-    "extra large"
-  ]
-}
+[
+  "small",
+  "medium",
+  "large",
+  "extra large"
+]
