@@ -73,6 +73,9 @@ func GenerateOrderSentences() {
 		fmt.Println(err)
 	}
 
+	// count determines how many toppings to include in a sentence
+	count := 1
+
 	sentences := []string{}
 		for _, crust := range crusts {
 			for _, size := range sizes {
@@ -83,12 +86,28 @@ func GenerateOrderSentences() {
 				// Figure out a random number based on the length of the toppings array
 				max := len(toppings) - 1
 				ran := rand.Intn(max-0) + 0
-				topping := toppings[ran]
+
+				topping := ""
+
+				// if the random number + count is lower than the upper bounds of the array, fetch that many toppings
+				if (ran + count) <= len(toppings) {
+					tArr := toppings[ran:ran + count]
+					topping = strings.Join(tArr[:], ",")
+				} else {
+					topping = toppings[ran]
+				}
+
 				order = strings.Replace(order, "{toppings}", topping, -1)
 
 				sentences = append(sentences, order)
 			}
+
+			// up the count at the end of the 'sizes' loop as there are fewer sizes
+			count++
 		}
+
+		// reset the count back to 1 once we leave the 'sizes' loop
+		count = 1
 	}
 
 	output := new(strings.Builder)

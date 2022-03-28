@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 )
 
 const (
@@ -15,25 +16,23 @@ const (
 	Unknown bayesian.Class = "Unknown"
 )
 
-type Intent struct {
-	Name	bayesian.Class
-	Filename	string
-}
-
 func Train() {
 	classifier := bayesian.NewClassifierTfIdf(Order, Hours, Unknown)
 
 	hoursIntents, err := GetIntents("data/intents/hours.json")
+	fmt.Printf("Number of hours intents: %d \n", len(hoursIntents))
 	if err != nil {
 		log.Println(err)
 	}
 
 	orderIntents, err := GetIntents("data/intents/order.json")
+	fmt.Printf("Number of orders intents: %d \n", len(orderIntents))
 	if err != nil {
 		log.Println(err)
 	}
 
 	unknownIntents, err := GetIntents("data/intents/unknown.json")
+	fmt.Printf("Number of unknown intents: %d \n", len(unknownIntents))
 	if err != nil {
 		log.Println(err)
 	}
@@ -44,10 +43,11 @@ func Train() {
 
 	classifier.ConvertTermsFreqToTfIdf()
 
-	classifier.WriteToFile("classifier")
+	//classifier.WriteToFile("classifier")
 
+	test := []string{"Can I get a thin crust pizza with the following toppings garlic, size small?"}
 	scores, likely, _ := classifier.LogScores(
-		[]string{"Around what time do you open up today?"},
+		SentencesToWords(test),
 	)
 
 	fmt.Printf("Scores: %.2f \n", scores)
@@ -68,7 +68,22 @@ func GetIntents(filename string) ([]string, error) {
 		return nil, err
 	}
 
-	return intents, nil
+	words := SentencesToWords(intents)
+
+	return words, nil
+}
+
+func SentencesToWords(sentences []string) []string {
+	w := []string{}
+
+	for _, s := range sentences {
+		words := strings.Split(s, " ")
+		for _, v := range words {
+			w = append(w, v)
+		}
+	}
+
+	return w
 }
 
 func LoadClassifier() (*bayesian.Classifier, error) {
