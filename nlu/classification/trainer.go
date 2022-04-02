@@ -1,10 +1,10 @@
-package nlu
+package classification
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/navossoc/bayesian"
 	"github.com/bbalet/stopwords"
+	"github.com/navossoc/bayesian"
 	"io/ioutil"
 	"log"
 	"os"
@@ -37,8 +37,8 @@ func Train(testPhrase []string) {
 	}
 
 	classifier.Learn(orderIntents, Order)
-	classifier.Learn(hoursIntents,  Hours)
-	classifier.Learn(unknownIntents,  Unknown)
+	classifier.Learn(hoursIntents, Hours)
+	classifier.Learn(unknownIntents, Unknown)
 
 	classifier.ConvertTermsFreqToTfIdf()
 

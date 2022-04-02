@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"main/data/intents/generators"
-	"main/nlu"
+	"main/nlu/classification"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	// Train a new model
 	if *trainFlag {
 		t := []string{*testPhraseFlag}
-		nlu.Train(t)
+		classification.Train(t)
 	}
 
 	// Generate sentences
