@@ -9,7 +9,10 @@ import (
 )
 
 // SentencesToWords converts a string array of sentences to a string array of words,
-// it also performs a removal of stopwords from the sentences before splitting them.
+// it also performs the following:
+// - removal of stopwords from the sentence
+// - lowercases the sentence
+// - removes all non-alphanumeric characters
 func SentencesToWords(sentences []string) []string {
 	w := []string{}
 
