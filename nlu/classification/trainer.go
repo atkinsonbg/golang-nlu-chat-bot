@@ -3,18 +3,19 @@ package classification
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/bbalet/stopwords"
-	"github.com/navossoc/bayesian"
 	"io/ioutil"
 	"log"
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/bbalet/stopwords"
+	"github.com/navossoc/bayesian"
 )
 
 const (
-	Order bayesian.Class = "Order"
-	Hours bayesian.Class = "Hours"
+	Order   bayesian.Class = "Order"
+	Hours   bayesian.Class = "Hours"
 	Unknown bayesian.Class = "Unknown"
 )
 
@@ -114,4 +115,3 @@ func LoadClassifier() (*bayesian.Classifier, error) {
 
 	return classifier, nil
 }
-
