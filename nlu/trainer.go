@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/navossoc/bayesian"
+	"github.com/bbalet/stopwords"
 	"io/ioutil"
 	"log"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -16,23 +18,20 @@ const (
 	Unknown bayesian.Class = "Unknown"
 )
 
-func Train() {
+func Train(testPhrase []string) {
 	classifier := bayesian.NewClassifierTfIdf(Order, Hours, Unknown)
 
 	hoursIntents, err := GetIntents("data/intents/hours.json")
-	fmt.Printf("Number of hours intents: %d \n", len(hoursIntents))
 	if err != nil {
 		log.Println(err)
 	}
 
 	orderIntents, err := GetIntents("data/intents/order.json")
-	fmt.Printf("Number of orders intents: %d \n", len(orderIntents))
 	if err != nil {
 		log.Println(err)
 	}
 
 	unknownIntents, err := GetIntents("data/intents/unknown.json")
-	fmt.Printf("Number of unknown intents: %d \n", len(unknownIntents))
 	if err != nil {
 		log.Println(err)
 	}
@@ -43,11 +42,13 @@ func Train() {
 
 	classifier.ConvertTermsFreqToTfIdf()
 
-	//classifier.WriteToFile("classifier")
+	classifier.WriteToFile("models/classifier")
 
-	test := []string{"Can I get a thin crust pizza with the following toppings garlic, size small?"}
+	fmt.Printf("TEST SENTENCE: %s\n", testPhrase)
+	cleanedTest := SentencesToWords(testPhrase)
+	fmt.Printf("CLEANED SENTENCE: %s\n", cleanedTest)
 	scores, likely, _ := classifier.LogScores(
-		SentencesToWords(test),
+		cleanedTest,
 	)
 
 	fmt.Printf("Scores: %.2f \n", scores)
@@ -73,13 +74,32 @@ func GetIntents(filename string) ([]string, error) {
 	return words, nil
 }
 
+// SentencesToWords converts a string array of sentences to a string array of words,
+// it also performs a removal of stopwords from the sentences before splitting them.
 func SentencesToWords(sentences []string) []string {
 	w := []string{}
 
 	for _, s := range sentences {
+		// remove all non-alphanumeric characters
+		reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+		if err != nil {
+			log.Fatal(err)
+		}
+		s = reg.ReplaceAllString(s, " ")
+
+		// remove any stopwords from the sentence
+		s = stopwords.CleanString(s, "en", true)
+
+		// lowercase all the text
+		s = strings.ToLower(s)
+
+		// split the sentence into words
 		words := strings.Split(s, " ")
 		for _, v := range words {
-			w = append(w, v)
+			// only add words with a length greater than 2
+			if len(v) > 2 {
+				w = append(w, v)
+			}
 		}
 	}
 
@@ -87,7 +107,7 @@ func SentencesToWords(sentences []string) []string {
 }
 
 func LoadClassifier() (*bayesian.Classifier, error) {
-	classifier, err := bayesian.NewClassifierFromFile("classifier")
+	classifier, err := bayesian.NewClassifierFromFile("models/classifier")
 	if err != nil {
 		return nil, err
 	}
