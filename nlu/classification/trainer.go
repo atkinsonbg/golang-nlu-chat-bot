@@ -3,10 +3,11 @@ package classification
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/navossoc/bayesian"
 	"io/ioutil"
 	"log"
 	"os"
+
+	"github.com/navossoc/bayesian"
 )
 
 const (

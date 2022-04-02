@@ -1,10 +1,11 @@
 package classification
 
 import (
-	"github.com/bbalet/stopwords"
 	"log"
 	"regexp"
 	"strings"
+
+	"github.com/bbalet/stopwords"
 )
 
 // SentencesToWords converts a string array of sentences to a string array of words,

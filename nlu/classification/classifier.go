@@ -2,6 +2,7 @@ package classification
 
 import (
 	"fmt"
+
 	"github.com/navossoc/bayesian"
 )
 
